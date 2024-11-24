@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .options button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            font-size: 16px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .options button:hover {
+            background: #0056b3;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="quiz">
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+        </div>
+        <div class="message" id="message"></div>
+    </div>
+
+    <script>
+        let questions = [    {
+        question: "What does HIPAA stand for?",
+        options: ["A. Health Insurance Privacy and Accountability Act", "B. Health Insurance Portability and Accountability Act", "C. Health Information Protection and Accuracy Act", "D. Health Insurance Policy and Authorization Act"],
+        answer: "B"
+    },
+    {
+        question: "Which DEA schedule includes medications with the highest potential for abuse but accepted medical uses?",
+        options: ["A. Schedule I", "B. Schedule II", "C. Schedule III", "D. Schedule IV"],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is the maximum allowable daily dose of acetaminophen for most adults?",
+        options: ["A. 2 grams", "B. 3 grams", "C. 4 grams", "D. 5 grams"],
+        answer: "C"
+    },
+    {
+        question: "What is the most appropriate action if a patient requests a refill too early for a controlled medication?",
+        options: ["A. Dispense immediately", "B. Contact the prescriber", "C. Refuse without explanation", "D. Notify the DEA"],
+        answer: "B"
+    },
+    {
+        question: "Which law requires medications to meet certain purity, strength, and quality standards?",
+        options: ["A. Food, Drug, and Cosmetic Act", "B. Controlled Substances Act", "C. Affordable Care Act", "D. Poison Prevention Act"],
+        answer: "A"
+    },
+    {
+        question: "Which of the following is the antidote for opioid overdose?",
+        options: ["A. Naloxone", "B. Flumazenil", "C. Acetylcysteine", "D. Protamine sulfate"],
+        answer: "A"
+    },
+    {
+        question: "What is the generic name for Lipitor?",
+        options: ["A. Simvastatin", "B. Atorvastatin", "C. Rosuvastatin", "D. Pravastatin"],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is considered a high-alert medication?",
+        options: ["A. Insulin", "B. Amoxicillin", "C. Ibuprofen", "D. Clarithromycin"],
+        answer: "A"
+    },
+    {
+        question: "What is the normal therapeutic range for warfarin, measured by INR?",
+        options: ["A. 1.0-2.0", "B. 2.0-3.0", "C. 3.0-4.0", "D. 4.0-5.0"],
+        answer: "B"
+    },
+    {
+        question: "Which organization is responsible for regulating the approval of new medications in the United States?",
+        options: ["A. DEA", "B. FDA", "C. CDC", "D. USP"],
+        answer: "B"
+    },
+    {
+        question: "Which class of medication is commonly associated with the side effect of cough?",
+        options: ["A. ACE inhibitors", "B. Beta-blockers", "C. Calcium channel blockers", "D. ARBs"],
+        answer: "A"
+    },
+    {
+        question: "Which of the following medications requires REMS (Risk Evaluation and Mitigation Strategies)?",
+        options: ["A. Isotretinoin", "B. Metformin", "C. Omeprazole", "D. Lisinopril"],
+        answer: "A"
+    },
+    {
+        question: "Which vitamin deficiency is commonly associated with the chronic use of metformin?",
+        options: ["A. Vitamin B12", "B. Vitamin C", "C. Vitamin D", "D. Folic Acid"],
+        answer: "A"
+    },
+    {
+        question: "What is the primary electrolyte imbalance caused by loop diuretics?",
+        options: ["A. Hypokalemia", "B. Hyperkalemia", "C. Hypercalcemia", "D. Hypernatremia"],
+        answer: "A"
+    },
+    {
+        question: "Which of the following medications is contraindicated in pregnancy?",
+        options: ["A. Warfarin", "B. Amoxicillin", "C. Acetaminophen", "D. Labetalol"],
+        answer: "A"
+    },
+    {
+        question: "What is the mechanism of action of proton pump inhibitors (PPIs)?",
+        options: ["A. Inhibits H2 receptors", "B. Inhibits the H+/K+ ATPase pump", "C. Blocks muscarinic receptors", "D. Neutralizes stomach acid"],
+        answer: "B"
+    },
+    {
+        question: "What is the correct method for counseling patients about sublingual nitroglycerin?",
+        options: ["A. Take with a full glass of water", "B. Place under the tongue and let dissolve", "C. Chew before swallowing", "D. Swallow whole"],
+        answer: "B"
+    },
+    {
+        question: "Which of the following medications is considered a biologic?",
+        options: ["A. Insulin glargine", "B. Metformin", "C. Atorvastatin", "D. Furosemide"],
+        answer: "A"
+    },
+    {
+        question: "What is the therapeutic use of alendronate?",
+        options: ["A. Osteoporosis", "B. Hypertension", "C. Hypercholesterolemia", "D. Diabetes"],
+        answer: "A"
+    },
+    {
+        question: "Which drug class ends with the suffix '-pril'?",
+        options: ["A. ACE inhibitors", "B. ARBs", "C. Beta-blockers", "D. Calcium channel blockers"],
+        answer: "A"
+    },
+    {
+        question: "What is the name of the test used to monitor heparin therapy?",
+        options: ["A. PT/INR", "B. aPTT", "C. Platelet count", "D. Hemoglobin"],
+        answer: "B"
+    },
+    {
+        question: "What should be done if a patient has a penicillin allergy and needs an antibiotic?",
+        options: ["A. Prescribe a cephalosporin", "B. Use a macrolide or another non-beta-lactam", "C. Avoid antibiotics entirely", "D. Test for penicillin tolerance"],
+        answer: "B"
+    },
+    {
+        question: "Which of the following is a key counseling point for bisphosphonates?",
+        options: ["A. Take with food", "B. Take with a full glass of water and remain upright for 30 minutes", "C. Take at bedtime", "D. Avoid calcium supplements"],
+        answer: "B"
+    },
+    {
+        question: "Which antihypertensive medication can cause a lupus-like syndrome?",
+        options: ["A. Hydralazine", "B. Lisinopril", "C. Atenolol", "D. Verapamil"],
+        answer: "A"
+    },
+    {
+        question: "What is the mechanism of action of insulin?",
+        options: ["A. Stimulates glucose uptake by cells", "B. Inhibits glucagon release", "C. Blocks carbohydrate absorption", "D. Stimulates ketogenesis"],
+        answer: "A"
+    }
+]; // Placeholder for questions array
+        let currentQuestion = 0;
+        let score = 0;
+        const incorrectAnswers = [];
+
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) {
+                showResults();
+                return;
+            }
+            const questionObj = questions[currentQuestion];
+            document.getElementById("question").textContent = questionObj.question;
+            const optionsDiv = document.getElementById("options");
+            optionsDiv.innerHTML = "";
+            questionObj.options.forEach(option => {
+                const button = document.createElement("button");
+                button.textContent = option;
+                button.onclick = () => checkAnswer(option);
+                optionsDiv.appendChild(button);
+            });
+        }
+
+        function checkAnswer(selectedOption) {
+            const current = questions[currentQuestion];
+            if (selectedOption.startsWith(current.answer)) {
+                score++;
+            } else {
+                incorrectAnswers.push(`Question: ${current.question}, Your Answer: ${selectedOption}, Correct Answer: ${current.answer}`);
+            }
+            currentQuestion++;
+            loadQuestion();
+        }
+
+        function showResults() {
+            const quizDiv = document.getElementById("quiz");
+            quizDiv.innerHTML = `
+                <div class="result">
+                    <h2>Quiz Complete!</h2>
+                    <p>Your Score: ${score}/${questions.length}</p>
+                    <h3>Incorrect Answers:</h3>
+                    <ul>${incorrectAnswers.map(ans => `<li>${ans}</li>`).join("")}</ul>
+                </div>
+            `;
+        }
+
+        loadQuestion(); // Start the quiz
+    </script>
+</body>
+</html>
+
+
